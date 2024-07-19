@@ -1,13 +1,11 @@
-import './App.css'
+import './App.css';
 
 function App() {
   return (
     <>
-      <p className="text-lg">
-          Tailwind Test
-      </p>
+      <p className="text-lg">Tailwind Test</p>
     </>
-  )
+  );
 }
 
-export default App
+export default App;
