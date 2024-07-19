@@ -1,3 +1,4 @@
+import Canvas from './components/Canvas/Canvas.tsx';
 import FloatControls from './components/FloatControls/FloatControls.tsx';
 import Navbar from './components/Navbar.tsx';
 
@@ -7,7 +8,7 @@ function App() {
       <Navbar />
 
       <section className="relative flex-1">
-        <p>Canvas will be here</p>
+        <Canvas />
       </section>
 
       <FloatControls />
