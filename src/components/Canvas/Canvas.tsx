@@ -1,8 +1,9 @@
-import { MouseEvent, useCallback, useRef } from 'react';
+import { MouseEvent, memo, useCallback, useRef } from 'react';
 
 import useWindowResizeListener from '../../hooks/useWindowResizeListener.ts';
+import { useDrawConfigurationStore } from '../../store/useDrawConfiguration.ts';
 
-const Canvas = () => {
+const Canvas = memo(() => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const contextRef = useRef<CanvasRenderingContext2D | null>(null);
   const progressRef = useRef(false);
@@ -20,6 +21,12 @@ const Canvas = () => {
 
     if (!contextRef.current)
       contextRef.current = canvasRef.current.getContext('2d');
+
+    const configuration = useDrawConfigurationStore.getState();
+
+    contextRef.current!.strokeStyle = configuration.currentColor;
+    contextRef.current!.lineCap = 'round';
+    contextRef.current!.lineWidth = 2;
 
     progressRef.current = true;
 
@@ -56,6 +63,8 @@ const Canvas = () => {
     pauseRef.current = false;
   }, []);
 
+  console.log('rerender');
+
   return (
     <canvas
       ref={canvasRef}
@@ -71,6 +80,6 @@ const Canvas = () => {
       Your browser doesn't support Canvas.
     </canvas>
   );
-};
+});
 
 export default Canvas;
