@@ -1,9 +1,11 @@
 import { MouseEvent, memo, useCallback, useRef } from 'react';
 
+import { ERASE_COLOR } from '../../common/constants.ts';
+import { DrawConfigurationMode } from '../../common/enums.ts';
 import useWindowResizeListener from '../../hooks/useWindowResizeListener.ts';
 import { useDrawConfigurationStore } from '../../store/useDrawConfiguration.ts';
 
-const Canvas = memo(() => {
+const Canvas = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const contextRef = useRef<CanvasRenderingContext2D | null>(null);
   const progressRef = useRef(false);
@@ -24,13 +26,17 @@ const Canvas = memo(() => {
 
     const configuration = useDrawConfigurationStore.getState();
 
-    contextRef.current!.strokeStyle = configuration.currentColor;
+    contextRef.current!.lineWidth = configuration.currentSize;
+    contextRef.current!.strokeStyle =
+      configuration.currentMode === DrawConfigurationMode.Erase
+        ? ERASE_COLOR
+        : configuration.currentColor;
     contextRef.current!.lineCap = 'round';
-    contextRef.current!.lineWidth = 2;
 
     progressRef.current = true;
 
     contextRef.current?.beginPath();
+
     contextRef.current?.moveTo(
       event.nativeEvent.offsetX,
       event.nativeEvent.offsetY
@@ -63,8 +69,6 @@ const Canvas = memo(() => {
     pauseRef.current = false;
   }, []);
 
-  console.log('rerender');
-
   return (
     <canvas
       ref={canvasRef}
@@ -80,6 +84,6 @@ const Canvas = memo(() => {
       Your browser doesn't support Canvas.
     </canvas>
   );
-});
+};
 
-export default Canvas;
+export default memo(Canvas);

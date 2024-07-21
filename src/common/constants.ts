@@ -1,4 +1,5 @@
 import { Color } from '../types/common.ts';
+import { DrawConfigurationMode } from './enums.ts';
 
 export const DEFAULT_COLOR: Color = {
   label: 'Cafe Noir',
@@ -28,3 +29,16 @@ export const COLORS: Color[] = [
     value: '#FE7F2D',
   },
 ];
+
+export const DEFAULT_SIZE = 2;
+
+export const SIZES: number[] = [DEFAULT_SIZE, 4, 6, 8, 10];
+
+export const DEFAULT_MODE = DrawConfigurationMode.Draw;
+
+export const MODES: DrawConfigurationMode[] = [
+  DEFAULT_MODE,
+  DrawConfigurationMode.Erase,
+];
+
+export const ERASE_COLOR = '#fff';
